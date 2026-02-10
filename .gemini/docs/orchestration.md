@@ -1,0 +1,60 @@
+# Orchestration
+
+## Chaîne principale
+
+```
+Idée → /prd → PRD → /stack → Stack → /architect → Architecture + Stories
+         ↓            ↓                    ↓
+    docs/prd.md   docs/stack.md    docs/architecture.md
+                                   docs/stories/*.md
+```
+
+`/stack` est optionnel si la stack est déjà connue. `/architect` vérifie que `docs/stack.md` existe avant de commencer.
+
+## Boucle de développement
+
+```
+          ┌─────────────────────────────────────────────────┐
+          │                                                 │
+/dev story N → Code + Tests → Commit → Dev Notes ──┐       │
+                                                    │       │
+                                   dev notes vides? │       │
+                                    ├── oui → story N+1 ───┘
+                                    └── non → /architect (réconciliation)
+                                                    │
+                                              mise à jour archi
+                                              + stories impactées
+                                                    │
+                                              story N+1 ──────┘
+```
+
+Le dev implémente une story, écrit ses dev notes, et passe la main à l'architecte si des imprévus impactent la suite. L'architecte met à jour l'architecture et les stories concernées. Puis le dev reprend la story suivante.
+
+## Agents
+
+| Agent | Commande | Mode | Input | Output | Livrable |
+|-------|----------|------|-------|--------|----------|
+| PRD | `/prd` | — | Idée ou demande de feature | PRD | `docs/prd.md` |
+| Stack | `/stack` | — | PRD | Stack technique validée | `docs/stack.md` |
+| Architecte | `/architect` | initial | PRD + stack | Architecture + stories | `docs/architecture.md` + `docs/stories/*.md` |
+| Architecte | `/architect` | réconciliation | Story terminée + dev notes | Archi et stories mises à jour | Fichiers mis à jour |
+| Dev | `/dev` | — | Une story | Code, tests, commit, dev notes | Code + story mise à jour |
+| Dev (review) | `/review` | — | Code à reviewer | Problèmes + corrections | Code corrigé |
+
+## Règles de passage
+
+- Chaque agent attend la **validation utilisateur** avant que son output soit considéré comme terminé.
+- Chaque agent **persiste** son livrable dans `docs/` après validation.
+- L'output d'un agent est directement consommable par le suivant, sans transformation.
+- Les agents suivants **lisent** les livrables des agents précédents depuis `docs/`.
+- Le dev agent reçoit **une story à la fois**, pas le document d'architecture complet.
+- Entre deux stories, le dev **rapporte** à l'architecte via les dev notes. L'architecte réconcilie si nécessaire avant que le dev continue.
+
+## Escalade
+
+- Si le dev identifie un manque dans la story → il demande à l'utilisateur ou demande à solliciter l'architecte.
+- Si l'architecte identifie un manque dans le PRD → il demande à l'utilisateur ou demande à solliciter le PRD.
+
+## Documents transverses
+
+Tous les agents lisent `.claude/docs/agent-rules.md` avant de commencer. Chaque agent a ses propres références listées dans sa section "Activation".
