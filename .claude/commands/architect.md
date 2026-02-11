@@ -84,6 +84,9 @@ Comment savoir que c'est fait.
 ## Dépendances
 Quelles stories doivent être terminées avant celle-ci.
 
+## Débloque
+Quelles stories deviennent réalisables une fois celle-ci terminée.
+
 ## Dev Notes
 _Rempli par le dev après implémentation._
 ```
@@ -140,6 +143,14 @@ Chaque story doit pouvoir être lue **sans le document d'architecture**. Utilise
 - La section `## Dev Notes` vide
 
 Présente les stories une par une (rédaction progressive). L'utilisateur valide ou ajuste au fur et à mesure.
+
+Après le découpage, analyse le graphe de dépendances :
+1. **Tableau récapitulatif** — stories avec leurs dépendances
+2. **Points de fork** — après quelle story peut-on lancer des branches parallèles
+3. **Chemin critique** — la séquence la plus longue qui détermine la durée minimale du projet
+4. **Gains de parallélisation** — quelles stories ne rallongent pas le planning si exécutées en parallèle
+
+Présente cette analyse visuellement (graphe ASCII ou tableau). L'objectif est de donner à l'utilisateur une vision claire de l'ordre optimal d'exécution.
 
 #### Phase 4 — Validation et persistance
 
