@@ -1,39 +1,70 @@
-# Gemini CLI — Project Instructions
+# PAI DEV — Framework de développement agent-driven
 
-Ce fichier définit les règles et l'orchestration pour le développement du projet **PAI_DEV** avec Gemini.
+## Chaîne d'orchestration
 
-## Rôles et Orchestration
+```
+Idée → /prd → PRD → /stack (si nécessaire) → /architect → Architecture + Stories
+                                                                    ↓
+                                                          /review stories → Rapport
+                                                                    ↓
+                                              ┌── /dev story N → Dev Notes ──┐
+                                              │                              │
+                                              │   si impact: /architect réconciliation
+                                              │          → mise à jour stories
+                                              │                              │
+                                              └──────── story N+1 ←──────────┘
+```
 
-Le projet suit un workflow structuré défini dans [.gemini/docs/orchestration.md](.gemini/docs/orchestration.md).
-Chaque agent (PRD, Stack, Architecte, Dev, Review) a des responsabilités spécifiques et produit des livrables persistés dans `docs/`.
+Chaque étape produit un livrable écrit dans `docs/` et directement consommable par la suivante. L'utilisateur valide avant chaque passage. Entre deux stories, le dev rapporte ses imprévus à l'architecte qui réconcilie si nécessaire.
 
-### Commandes (Modes de fonctionnement)
+## Commandes disponibles
 
-Lorsque l'utilisateur utilise l'une des commandes suivantes, active le mode correspondant en suivant les instructions du fichier associé :
+| Commande | Rôle | Input | Output | Livrable |
+|----------|------|-------|--------|----------|
+| `/prd` | Product Manager | Idée ou demande de feature | PRD structuré | `docs/prd.md` |
+| `/stack` | Architecte (stack) | PRD | Stack technique validée | `docs/stack.md` |
+| `/architect` | Architecte (initial) | PRD + stack | Architecture + stories | `docs/architecture.md` + `docs/stories/*.md` |
+| `/architect` | Architecte (corrections) | Rapport review stories | Stories corrigées | Stories + archi mis à jour |
+| `/architect` | Architecte (réconciliation) | Story terminée + dev notes | Archi et stories mises à jour | Fichiers mis à jour |
+| `/dev` | Développeur senior | Une story | Code, tests, commit, dev notes | Code + story mise à jour |
+| `/review` | Reviewer (code) | Code à reviewer | Problèmes + corrections | Code corrigé |
+| `/review` | Reviewer (stories) | Stories de l'architecte | Rapport de validation | Feu vert ou corrections |
 
-- **/prd** : [Product Manager](.gemini/commands/prd.md) — Transforme une idée en PRD dans `docs/prd.md`.
-- **/stack** : [Stack Expert](.gemini/commands/stack.md) — Définit la stack technique.
-- **/architect** : [Architecte](.gemini/commands/architect.md) — Crée l'architecture et les stories.
-- **/dev** : [Developer](.gemini/commands/dev.md) — Implémente une story spécifique.
-- **/review** : [Reviewer](.gemini/commands/review.md) — Analyse et corrige le code.
+### Backlog inter-versions
 
-## Règles Transverses
+`docs/backlog.md` est alimenté par PRD, architecte et dev quand un élément est reporté. Le PRD et l'architecte le lisent à chaque activation et proposent les éléments pertinents par rapport à la demande courante.
 
-Applique strictement les règles définies dans [.gemini/docs/agent-rules.md](.gemini/docs/agent-rules.md) :
+## Règles transverses (tous les agents)
 
-1. **Rédaction progressive** : Ne pas rédiger le livrable d'un bloc. Construire incrémentalement.
-2. **Élicitation conversationnelle** : Poser les questions **une par une**, expliquer pourquoi, et proposer des options.
-3. **Persistance** : Tous les livrables finaux DOIVENT être écrits dans des fichiers sous `docs/`.
-4. **Validation** : Toujours attendre la validation utilisateur avant de persister ou de passer à l'étape suivante.
+- **Rédaction progressive** — Le livrable se construit au fil de la conversation, pas d'un bloc à la fin. Dès qu'une section est clarifiée, elle est rédigée et présentée.
+- **Élicitation une par une** — Les questions sont posées une à la fois, jamais en bloc. Chaque question explique pourquoi elle est posée et propose 2-3 options concrètes.
+- **Output consommable** — Le livrable de chaque agent est directement exploitable par le suivant. Pas de brouillon.
+- **Persistance** — Chaque livrable est écrit dans un fichier projet (`docs/`). Ce qui n'est pas écrit n'existe pas.
+- **Feedback loop** — Après chaque story, le dev écrit ses dev notes. Si impact sur la suite, l'architecte réconcilie avant la story suivante.
+- **Ne pas deviner** — Si c'est flou, demander. Ne pas inventer d'informations non fournies.
+- **Rester dans son scope** — Ne pas contredire les documents de référence. Ne pas sortir de son périmètre.
 
-## Workflows Techniques
+## Escalade
 
-- **Git** : Suit [.gemini/docs/git-workflow.md](.gemini/docs/git-workflow.md). Utilise les Conventional Commits avec le tag `[gemini/nom-agent]`.
-- **Tests** : Suit [.gemini/docs/testing-strategy.md](.gemini/docs/testing-strategy.md).
-- **Stack** : Suit [.gemini/docs/stack-selection.md](.gemini/docs/stack-selection.md).
+- Si le dev identifie un manque dans la story → demander à l'utilisateur ou solliciter l'architecte.
+- Si l'architecte identifie un manque dans le PRD → demander à l'utilisateur ou solliciter le PRD.
 
-## Localisation des documents
+## Documents de référence
 
-- Documents de conception : `docs/`
-- Stories : `docs/stories/*.md`
-- Instructions Gemini : `.gemini/`
+Tous dans `.gemini/docs/` :
+
+| Document | Rôle |
+|----------|------|
+| `agent-rules.md` | Règles transverses détaillées |
+| `architectures/layered/back.md` | Architecture back-end en couches |
+| `architectures/layered/front.md` | Architecture front-end en couches |
+| `models/anemic.md` | Méthodologie entités métier (modèle anémique) |
+| `git-workflow.md` | Branching, conventional commits |
+| `stack-selection.md` | Procédure de sélection de stack |
+| `testing-strategy.md` | Stratégie de tests par couche |
+| `orchestration.md` | Chaîne, passages, escalade |
+| `backlog-format.md` | Format du backlog inter-versions |
+
+## Contexte projet
+
+Si `.gemini/project/context.md` existe, lis-le pour le contexte spécifique de ce projet.

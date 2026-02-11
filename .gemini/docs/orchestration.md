@@ -7,9 +7,21 @@ Idée → /prd → PRD → /stack → Stack → /architect → Architecture + St
          ↓            ↓                    ↓
     docs/prd.md   docs/stack.md    docs/architecture.md
                                    docs/stories/*.md
+                                          ↓
+                                   /review stories → Rapport
+                                          ↓
+                                   feu vert → /dev
+                                   bloquants → /architect (corrections)
+
+         ↕ (lecture/écriture)
+      docs/backlog.md
 ```
 
-`/stack` est optionnel si la stack est déjà connue. `/architect` vérifie que `docs/stack.md` existe avant de commencer.
+`/stack` est optionnel si la stack est déjà connue. `/architect` vérifie que `docs/stack.md` existe avant de commencer. `/review stories` est recommandé entre l'architecte et le dev pour valider la cohérence des stories.
+
+### Backlog inter-versions
+
+`docs/backlog.md` est un fichier transverse alimenté par tous les agents (PRD, architecte, dev) quand un élément est reporté. Le PRD le lit à chaque activation et propose les éléments pertinents par rapport à la demande courante.
 
 ## Boucle de développement
 
@@ -37,9 +49,11 @@ Le dev implémente une story, écrit ses dev notes, et passe la main à l'archit
 | PRD | `/prd` | — | Idée ou demande de feature | PRD | `docs/prd.md` |
 | Stack | `/stack` | — | PRD | Stack technique validée | `docs/stack.md` |
 | Architecte | `/architect` | initial | PRD + stack | Architecture + stories | `docs/architecture.md` + `docs/stories/*.md` |
+| Architecte | `/architect` | corrections | Rapport review stories | Stories corrigées | Stories + archi mis à jour |
 | Architecte | `/architect` | réconciliation | Story terminée + dev notes | Archi et stories mises à jour | Fichiers mis à jour |
 | Dev | `/dev` | — | Une story | Code, tests, commit, dev notes | Code + story mise à jour |
-| Dev (review) | `/review` | — | Code à reviewer | Problèmes + corrections | Code corrigé |
+| Review | `/review` | code | Code à reviewer | Problèmes + corrections | Code corrigé |
+| Review | `/review` | stories | Stories de l'architecte | Rapport de validation | Feu vert ou corrections |
 
 ## Règles de passage
 
@@ -57,4 +71,14 @@ Le dev implémente une story, écrit ses dev notes, et passe la main à l'archit
 
 ## Documents transverses
 
-Tous les agents lisent `.claude/docs/agent-rules.md` avant de commencer. Chaque agent a ses propres références listées dans sa section "Activation".
+Tous les agents lisent `.gemini/docs/agent-rules.md` avant de commencer. Chaque agent a ses propres références listées dans sa section "Activation".
+
+`docs/backlog.md` est alimenté par tous les agents. Lecture : `/prd` à chaque activation, `/architect` en mode initial uniquement. Le dev y écrit mais ne le lit pas.
+
+## Personnalisation projet
+
+`.gemini/project/` contient les instructions projet :
+- `context.md` — contexte partagé (tous les agents)
+- `<agent>.md` — instructions additionnelles par agent
+
+Complète le framework sans le remplacer. Contradiction explicite → projet prend le pas.

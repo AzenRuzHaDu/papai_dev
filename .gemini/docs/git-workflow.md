@@ -42,7 +42,7 @@ Chaque commit suit le format [Conventional Commits](https://www.conventionalcomm
 type(scope): description courte [llm/agent]
 ```
 
-Le tag `[llm/agent]` identifie quel LLM et quel agent a produit le commit. Exemples : `[gemini/dev]`, `[gemini/architect]`, `[gpt4/planner]`. Pas de tag = commit humain.
+Le tag `[llm/agent]` identifie quel LLM et quel agent a produit le commit. Exemples : `[gemini/dev]`, `[gpt4/planner]`, `[gemini/review]`. Pas de tag = commit humain.
 
 ### Types
 
