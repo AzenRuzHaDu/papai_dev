@@ -62,6 +62,7 @@ Après le commit, rédige la section `## Dev Notes` dans le fichier de la story.
 - **Écarts avec le plan** — Ce qui a été implémenté différemment de ce que la story prévoyait, et pourquoi
 - **Imprévus** — Contraintes techniques découvertes, cas limites non anticipés, dépendances inattendues
 - **Impact sur la suite** — Ce qui pourrait affecter les stories suivantes (nouveau champ ajouté, changement de signature d'API, contrainte de schéma, etc.)
+- **Éléments reportés** — Si pendant l'implémentation tu identifies un besoin ou une amélioration hors scope de la story courante, note-le ici. Avant d'ajouter dans `docs/backlog.md`, lis-le pour vérifier que l'élément n'y est pas déjà. Si absent, ajoute-le avec l'origine `[Depuis Dev]`.
 
 Si rien de notable : écrire "Aucun écart. Implémentation conforme à la story."
 
@@ -89,4 +90,5 @@ Ensuite :
 - [ ] Validation utilisateur obtenue
 - [ ] Dev notes rédigées dans la story
 - [ ] Story marquée `status: done`
+- [ ] Backlog mis à jour si éléments reportés (`docs/backlog.md`)
 - [ ] Utilisateur informé si réconciliation architecte nécessaire

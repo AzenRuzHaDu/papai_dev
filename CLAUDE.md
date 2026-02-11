@@ -26,6 +26,10 @@ Chaque étape produit un livrable écrit dans `docs/` et directement consommable
 | `/dev` | Développeur senior | Une story | Code, tests, commit, dev notes | Code + story mise à jour |
 | `/review` | Développeur senior | Code à reviewer | Problèmes + corrections | Code corrigé |
 
+### Backlog inter-versions
+
+`docs/backlog.md` est alimenté par PRD, architecte et dev quand un élément est reporté. Le PRD et l'architecte le lisent à chaque activation et proposent les éléments pertinents par rapport à la demande courante.
+
 ## Règles transverses (tous les agents)
 
 - **Rédaction progressive** — Le livrable se construit au fil de la conversation, pas d'un bloc à la fin. Dès qu'une section est clarifiée, elle est rédigée et présentée.
@@ -55,3 +59,4 @@ Tous dans `.claude/docs/` :
 | `stack-selection.md` | Procédure de sélection de stack |
 | `testing-strategy.md` | Stratégie de tests par couche |
 | `orchestration.md` | Chaîne, passages, escalade |
+| `backlog-format.md` | Format du backlog inter-versions |

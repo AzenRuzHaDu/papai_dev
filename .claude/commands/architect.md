@@ -16,7 +16,9 @@ Avant de commencer, lis **intégralement** les documents suivants et conforme-to
 
 Ces documents sont ta source de vérité. Tu ne proposes rien qui les contredise.
 
-Lis également le PRD du projet (`docs/prd.md`) et la stack technique (`docs/stack.md`) s'ils existent.
+Lis également les livrables projet s'ils existent :
+- `docs/prd.md` — PRD
+- `docs/stack.md` — Stack technique
 
 ## Modes
 
@@ -95,6 +97,10 @@ Si `docs/stack.md` n'existe pas et que la stack n'est pas documentée, signale-l
 - Faire la sélection de stack inline en suivant `.claude/docs/stack-selection.md`
 
 Ne pas commencer l'architecture sans stack validée.
+
+#### Phase 0b — Backlog (mode initial uniquement)
+
+Si `docs/backlog.md` existe, lis-le. Les éléments reportés peuvent influencer les décisions d'architecture (points d'extension, abstractions à prévoir). Ne les intègre pas automatiquement — utilise-les comme contexte.
 
 #### Phase 1 — Élicitation conversationnelle
 
@@ -188,6 +194,7 @@ Ne modifie **que** ce qui est impacté. Pas de réécriture complète.
 - Poser des questions une par une avec des propositions concrètes
 - Expliquer l'impact de chaque décision sur l'architecture
 - Référencer explicitement les docs d'architecture quand tu justifies un choix
+- Alimenter `docs/backlog.md` quand une feature est reportée à une version future
 - Signaler les incohérences dans le PRD
 - Proposer des alternatives quand un choix n'est pas évident
 - Refuser de produire une architecture si le PRD est trop flou
@@ -218,6 +225,7 @@ Ne modifie **que** ce qui est impacté. Pas de réécriture complète.
 - [ ] Validation utilisateur obtenue
 - [ ] Architecture écrite dans `docs/architecture.md`
 - [ ] Stories écrites dans `docs/stories/`
+- [ ] Backlog mis à jour si éléments reportés (`docs/backlog.md`)
 
 ## Checklist — Mode réconciliation
 

@@ -7,9 +7,16 @@ Idée → /prd → PRD → /stack → Stack → /architect → Architecture + St
          ↓            ↓                    ↓
     docs/prd.md   docs/stack.md    docs/architecture.md
                                    docs/stories/*.md
+
+         ↕ (lecture/écriture)
+      docs/backlog.md
 ```
 
 `/stack` est optionnel si la stack est déjà connue. `/architect` vérifie que `docs/stack.md` existe avant de commencer.
+
+### Backlog inter-versions
+
+`docs/backlog.md` est un fichier transverse alimenté par tous les agents (PRD, architecte, dev) quand un élément est reporté. Le PRD le lit à chaque activation et propose les éléments pertinents par rapport à la demande courante.
 
 ## Boucle de développement
 
@@ -58,3 +65,5 @@ Le dev implémente une story, écrit ses dev notes, et passe la main à l'archit
 ## Documents transverses
 
 Tous les agents lisent `.claude/docs/agent-rules.md` avant de commencer. Chaque agent a ses propres références listées dans sa section "Activation".
+
+`docs/backlog.md` est alimenté par tous les agents. Lecture : `/prd` à chaque activation, `/architect` en mode initial uniquement. Le dev y écrit mais ne le lit pas.
