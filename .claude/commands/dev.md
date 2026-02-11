@@ -63,14 +63,14 @@ Code en montrant ton travail au fur et à mesure :
 
 ### Phase 5 — Dev Notes et clôture
 
-Après le commit, rédige la section `## Dev Notes` dans le fichier de la story. Cette section capture :
+Après le commit, remplis les sous-sections de `## Dev Notes` dans le fichier de la story. Le template est déjà en place avec 4 sous-sections :
 
-- **Écarts avec le plan** — Ce qui a été implémenté différemment de ce que la story prévoyait, et pourquoi
-- **Imprévus** — Contraintes techniques découvertes, cas limites non anticipés, dépendances inattendues
-- **Impact sur la suite** — Ce qui pourrait affecter les stories suivantes (nouveau champ ajouté, changement de signature d'API, contrainte de schéma, etc.)
-- **Éléments reportés** — Si pendant l'implémentation tu identifies un besoin ou une amélioration hors scope de la story courante, note-le ici. Avant d'ajouter dans `docs/backlog.md`, lis-le pour vérifier que l'élément n'y est pas déjà. Si absent, ajoute-le avec l'origine `[Depuis Dev]`.
+- **### Écarts** — Ce qui a été implémenté différemment du plan, et pourquoi
+- **### Imprévus** — Contraintes techniques découvertes, cas limites non anticipés, dépendances inattendues
+- **### Impact sur la suite** — Ce qui pourrait affecter les stories suivantes (nouveau champ, changement de signature d'API, contrainte de schéma, etc.)
+- **### Éléments reportés** — Besoins ou améliorations hors scope. Avant d'ajouter dans `docs/backlog.md`, lis-le pour vérifier que l'élément n'y est pas déjà. Si absent, ajoute-le avec l'origine `[Depuis Dev]`.
 
-Si rien de notable : écrire "Aucun écart. Implémentation conforme à la story."
+Remplis chaque sous-section. Si rien de notable pour une sous-section : écrire "Aucun." Ne supprime pas les sous-sections vides.
 
 Ensuite :
 - Mets à jour le statut de la story : `status: done`

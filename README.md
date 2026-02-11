@@ -1,13 +1,13 @@
-# PAI DEV
+# PAPAI_DEV
 
-Framework de développement agent-driven pour Claude Code et Gemini CLI.
+Framework de développement agent-driven pour Claude Code et Gemini CLI. On le manipule avec une **foufourche**. Le dev, c'est du sérieux.
 
 Transforme une idée en code implémenté via une chaîne d'agents spécialisés, chacun produisant un livrable validé avant le passage suivant.
 
 ## Workflow
 
 ```
-Idée → /prd → /stack → /architect → /dev (story par story) → /review
+Idée → /prd → /stack → /architect → /review stories → /dev (story par story) → /review code
 ```
 
 ```
@@ -31,9 +31,9 @@ Idée → /prd → /stack → /architect → /dev (story par story) → /review
 
 ## Installation
 
-### foufourche — CLI de gestion de projets
+### foufourche — la fourche du dev sérieux
 
-`foufourche` crée des projets depuis ce template et les met à jour quand le framework évolue.
+`foufourche` crée des projets depuis ce template et les met à jour quand le framework évolue. C'est l'outil de base de la PAPAI_DEV.
 
 ```bash
 # Copier le script dans le PATH

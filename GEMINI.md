@@ -1,4 +1,4 @@
-# PAI DEV — Framework de développement agent-driven
+# PAPAI_DEV — Framework de développement agent-driven
 
 ## Chaîne d'orchestration
 
@@ -15,7 +15,7 @@ Idée → /prd → PRD → /stack (si nécessaire) → /architect → Architectu
                                               └──────── story N+1 ←──────────┘
 ```
 
-Chaque étape produit un livrable écrit dans `docs/` et directement consommable par la suivante. L'utilisateur valide avant chaque passage. Entre deux stories, le dev rapporte ses imprévus à l'architecte qui réconcilie si nécessaire.
+Chaque étape produit un livrable écrit dans `docs/` et directement consommable par la suivante. L'utilisateur valide avant chaque passage. Le `/review stories` est **obligatoire** avant de passer au dev — pas de dev sans feu vert. Entre deux stories, le dev rapporte ses imprévus à l'architecte qui réconcilie si nécessaire.
 
 ## Commandes disponibles
 

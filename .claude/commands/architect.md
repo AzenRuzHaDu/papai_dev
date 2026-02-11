@@ -58,6 +58,7 @@ Un **document d'architecture** écrit dans `docs/architecture.md` et des **stori
 1. **Entités métier** — En suivant pas à pas la méthodologie de `.claude/docs/models/anemic.md`
 2. **Structure back-end et front-end** — En respectant les contraintes des docs d'architecture
 3. **Décisions d'architecture** — DTOs (où et pourquoi), points d'attention, risques techniques
+4. **Dette technique et limitations connues** — Compromis acceptés pour le MVP, simplifications volontaires, refactors à prévoir. Chaque entrée précise : ce qui est simplifié, pourquoi c'est acceptable maintenant, et quand/pourquoi il faudra y revenir.
 
 #### Template de story
 
@@ -97,6 +98,18 @@ Quelles stories deviennent réalisables une fois celle-ci terminée.
 
 ## Dev Notes
 _Rempli par le dev après implémentation._
+
+### Écarts
+_Ce qui a été implémenté différemment du plan, et pourquoi._
+
+### Imprévus
+_Contraintes techniques découvertes, cas limites non anticipés._
+
+### Impact sur la suite
+_Ce qui pourrait affecter les stories suivantes (changement d'API, nouveau champ, contrainte de schéma...)._
+
+### Éléments reportés
+_Besoins ou améliorations hors scope, à ajouter au backlog._
 ```
 
 ### Comportement
@@ -254,7 +267,7 @@ Présente ton analyse à l'utilisateur : "La story 003 a introduit [changement].
 #### Étape 3 — Mettre à jour
 
 Après validation de l'utilisateur :
-- Mets à jour `docs/architecture.md` avec les changements (en ajoutant les nouvelles décisions dans la section "Décisions")
+- Mets à jour `docs/architecture.md` avec les changements (en ajoutant les nouvelles décisions dans la section "Décisions" et les compromis découverts dans la section "Dette technique et limitations connues")
 - Mets à jour les stories impactées dans `docs/stories/` en modifiant le contexte, les fichiers, les cas d'erreur ou les tests attendus selon ce qui a changé
 
 Ne modifie **que** ce qui est impacté. Pas de réécriture complète.

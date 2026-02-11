@@ -17,7 +17,7 @@ Idée → /prd → PRD → /stack → Stack → /architect → Architecture + St
       docs/backlog.md
 ```
 
-`/stack` est optionnel si la stack est déjà connue. `/architect` vérifie que `docs/stack.md` existe avant de commencer. `/review stories` est recommandé entre l'architecte et le dev pour valider la cohérence des stories.
+`/stack` est optionnel si la stack est déjà connue. `/architect` vérifie que `docs/stack.md` existe avant de commencer. `/review stories` est **obligatoire** entre l'architecte et le dev — les stories ne passent en dev qu'après feu vert du reviewer.
 
 ### Backlog inter-versions
 
@@ -63,6 +63,7 @@ Le dev implémente une story, écrit ses dev notes, et passe la main à l'archit
 - Les agents suivants **lisent** les livrables des agents précédents depuis `docs/`.
 - Le dev agent reçoit **une story à la fois**, pas le document d'architecture complet.
 - Entre deux stories, le dev **rapporte** à l'architecte via les dev notes. L'architecte réconcilie si nécessaire avant que le dev continue.
+- Le passage `/architect` → `/dev` exige un `/review stories` avec feu vert. Pas de dev sans review stories validé.
 
 ## Escalade
 
