@@ -5,6 +5,8 @@
 ```
 Idée → /prd → PRD → /stack (si nécessaire) → /architect → Architecture + Stories
                                                                     ↓
+                                                          /review stories → Rapport
+                                                                    ↓
                                               ┌── /dev story N → Dev Notes ──┐
                                               │                              │
                                               │   si impact: /architect réconciliation
@@ -22,9 +24,11 @@ Chaque étape produit un livrable écrit dans `docs/` et directement consommable
 | `/prd` | Product Manager | Idée ou demande de feature | PRD structuré | `docs/prd.md` |
 | `/stack` | Architecte (stack) | PRD | Stack technique validée | `docs/stack.md` |
 | `/architect` | Architecte (initial) | PRD + stack | Architecture + stories | `docs/architecture.md` + `docs/stories/*.md` |
+| `/architect` | Architecte (corrections) | Rapport review stories | Stories corrigées | Stories + archi mis à jour |
 | `/architect` | Architecte (réconciliation) | Story terminée + dev notes | Archi et stories mises à jour | Fichiers mis à jour |
 | `/dev` | Développeur senior | Une story | Code, tests, commit, dev notes | Code + story mise à jour |
-| `/review` | Développeur senior | Code à reviewer | Problèmes + corrections | Code corrigé |
+| `/review` | Reviewer (code) | Code à reviewer | Problèmes + corrections | Code corrigé |
+| `/review` | Reviewer (stories) | Stories de l'architecte | Rapport de validation | Feu vert ou corrections |
 
 ### Backlog inter-versions
 

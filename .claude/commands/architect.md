@@ -22,13 +22,15 @@ Lis également les livrables projet s'ils existent :
 
 ## Modes
 
-L'architecte a deux modes de fonctionnement :
+L'architecte a trois modes de fonctionnement :
 
 - **Mode initial** — Input = PRD. Produit l'architecture et les stories. C'est le mode par défaut.
+- **Mode corrections** — Input = retours du review stories. Corrige les stories impactées avant le dev.
 - **Mode réconciliation** — Input = une story terminée avec dev notes. Met à jour l'architecture et les stories suivantes si nécessaire.
 
 Détecte le mode automatiquement :
 - Si l'input est un PRD ou project brief → mode initial
+- Si l'input référence un rapport de review ou des corrections sur les stories → mode corrections
 - Si l'input référence une story terminée ou des dev notes → mode réconciliation
 
 ---
@@ -142,15 +144,22 @@ Chaque story doit pouvoir être lue **sans le document d'architecture**. Utilise
 - Les tests attendus
 - La section `## Dev Notes` vide
 
-Présente les stories une par une (rédaction progressive). L'utilisateur valide ou ajuste au fur et à mesure.
+Après le découpage, présente d'abord une vue d'ensemble avant d'entrer dans le détail :
 
-Après le découpage, analyse le graphe de dépendances :
-1. **Tableau récapitulatif** — stories avec leurs dépendances
-2. **Points de fork** — après quelle story peut-on lancer des branches parallèles
-3. **Chemin critique** — la séquence la plus longue qui détermine la durée minimale du projet
-4. **Gains de parallélisation** — quelles stories ne rallongent pas le planning si exécutées en parallèle
+1. **Tableau récapitulatif** — stories avec leurs dépendances et ce qu'elles débloquent
+2. **Analyse de parallélisation** :
+   - Points de fork — après quelle story peut-on lancer des branches parallèles
+   - Chemin critique — la séquence la plus longue qui détermine la durée minimale du projet
+   - Gains de parallélisation — quelles stories ne rallongent pas le planning si exécutées en parallèle
 
 Présente cette analyse visuellement (graphe ASCII ou tableau). L'objectif est de donner à l'utilisateur une vision claire de l'ordre optimal d'exécution.
+
+Puis propose deux options pour la revue des stories :
+
+1. **Revue complète** — on passe chaque story en revue une par une, avec validation à chaque étape
+2. **Revue ciblée** — tu rédiges toutes les stories et ne présentes en détail que celles où tu as des doutes ou des choix à trancher (ambiguïté, alternatives, zone grise)
+
+Dans les deux cas, toutes les stories sont rédigées. La différence est le niveau de validation interactive.
 
 #### Phase 4 — Validation et persistance
 
@@ -160,6 +169,52 @@ Présente cette analyse visuellement (graphe ASCII ou tableau). L'objectif est d
 - Une fois validé :
   - Écris le document d'architecture dans `docs/architecture.md`
   - Écris chaque story dans `docs/stories/NNN-nom-court.md` (ex: `001-entites-metier.md`, `002-api-auth.md`)
+
+---
+
+## Mode corrections
+
+### Input
+
+$ARGUMENTS
+
+Les retours du `/review stories` — un rapport de validation avec des issues bloquantes et/ou des améliorations. Lis les stories concernées dans `docs/stories/`.
+
+### Comportement
+
+#### Étape 1 — Analyser le rapport
+
+Lis le rapport de review. Pour chaque issue bloquante, identifie :
+- La story concernée
+- Le problème signalé
+- La correction suggérée par le reviewer
+
+#### Étape 2 — Proposer les corrections
+
+Présente à l'utilisateur les corrections prévues, story par story. Pour chaque correction :
+- Ce qui change
+- Pourquoi (en lien avec l'issue du review)
+- Si la correction impacte d'autres stories (effet cascade)
+
+Pour les améliorations (non bloquantes), propose de les intégrer ou de les ignorer.
+
+Attends la validation avant de modifier.
+
+#### Étape 3 — Appliquer
+
+Après validation :
+- Mets à jour les stories impactées dans `docs/stories/`
+- Mets à jour `docs/architecture.md` si une correction touche l'archi (nouvelle entité, changement de relation, etc.)
+- Ne modifie **que** ce qui est impacté. Pas de réécriture complète.
+
+### Checklist — Mode corrections
+
+- [ ] Rapport de review lu
+- [ ] Stories impactées identifiées
+- [ ] Corrections proposées à l'utilisateur
+- [ ] Validation obtenue
+- [ ] Stories mises à jour dans `docs/stories/`
+- [ ] Architecture mise à jour si nécessaire (`docs/architecture.md`)
 
 ---
 

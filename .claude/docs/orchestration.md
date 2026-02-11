@@ -7,12 +7,17 @@ Idée → /prd → PRD → /stack → Stack → /architect → Architecture + St
          ↓            ↓                    ↓
     docs/prd.md   docs/stack.md    docs/architecture.md
                                    docs/stories/*.md
+                                          ↓
+                                   /review stories → Rapport
+                                          ↓
+                                   feu vert → /dev
+                                   bloquants → /architect (corrections)
 
          ↕ (lecture/écriture)
       docs/backlog.md
 ```
 
-`/stack` est optionnel si la stack est déjà connue. `/architect` vérifie que `docs/stack.md` existe avant de commencer.
+`/stack` est optionnel si la stack est déjà connue. `/architect` vérifie que `docs/stack.md` existe avant de commencer. `/review stories` est recommandé entre l'architecte et le dev pour valider la cohérence des stories.
 
 ### Backlog inter-versions
 
@@ -44,9 +49,11 @@ Le dev implémente une story, écrit ses dev notes, et passe la main à l'archit
 | PRD | `/prd` | — | Idée ou demande de feature | PRD | `docs/prd.md` |
 | Stack | `/stack` | — | PRD | Stack technique validée | `docs/stack.md` |
 | Architecte | `/architect` | initial | PRD + stack | Architecture + stories | `docs/architecture.md` + `docs/stories/*.md` |
+| Architecte | `/architect` | corrections | Rapport review stories | Stories corrigées | Stories + archi mis à jour |
 | Architecte | `/architect` | réconciliation | Story terminée + dev notes | Archi et stories mises à jour | Fichiers mis à jour |
 | Dev | `/dev` | — | Une story | Code, tests, commit, dev notes | Code + story mise à jour |
-| Dev (review) | `/review` | — | Code à reviewer | Problèmes + corrections | Code corrigé |
+| Review | `/review` | code | Code à reviewer | Problèmes + corrections | Code corrigé |
+| Review | `/review` | stories | Stories de l'architecte | Rapport de validation | Feu vert ou corrections |
 
 ## Règles de passage
 
