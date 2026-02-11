@@ -10,6 +10,12 @@ Avant de commencer, lis :
 - `.claude/docs/agent-rules.md` — Règles transverses
 - `.claude/docs/stack-selection.md` — Procédure de sélection de stack
 
+### Contexte projet
+
+Si `.claude/project/context.md` existe, lis-le. Il contient le contexte spécifique de ce projet (domaine, conventions, contraintes). Son contenu complète les règles framework sans les remplacer.
+
+Si `.claude/project/stack.md` existe, lis-le. Il contient des instructions additionnelles pour cet agent. Ces instructions complètent celles de ce fichier. En cas de contradiction explicite, les instructions projet prennent le pas.
+
 Lis également le PRD du projet (`docs/prd.md`) s'il existe.
 
 ## Input

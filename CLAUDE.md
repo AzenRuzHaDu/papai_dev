@@ -64,3 +64,7 @@ Tous dans `.claude/docs/` :
 | `testing-strategy.md` | Stratégie de tests par couche |
 | `orchestration.md` | Chaîne, passages, escalade |
 | `backlog-format.md` | Format du backlog inter-versions |
+
+## Contexte projet
+
+Si `.claude/project/context.md` existe, lis-le pour le contexte spécifique de ce projet.

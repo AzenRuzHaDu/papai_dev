@@ -10,6 +10,12 @@ Avant de commencer, lis intégralement :
 - `.claude/docs/agent-rules.md`
 - `docs/backlog.md` (si existant) — éléments reportés des versions précédentes
 
+### Contexte projet
+
+Si `.claude/project/context.md` existe, lis-le. Il contient le contexte spécifique de ce projet (domaine, conventions, contraintes). Son contenu complète les règles framework sans les remplacer.
+
+Si `.claude/project/prd.md` existe, lis-le. Il contient des instructions additionnelles pour cet agent. Ces instructions complètent celles de ce fichier. En cas de contradiction explicite, les instructions projet prennent le pas.
+
 Applique strictement les règles transverses (rédaction progressive, élicitation une par une, persistance).
 
 ## Input

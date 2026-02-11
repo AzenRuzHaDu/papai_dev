@@ -74,3 +74,11 @@ Le dev implémente une story, écrit ses dev notes, et passe la main à l'archit
 Tous les agents lisent `.claude/docs/agent-rules.md` avant de commencer. Chaque agent a ses propres références listées dans sa section "Activation".
 
 `docs/backlog.md` est alimenté par tous les agents. Lecture : `/prd` à chaque activation, `/architect` en mode initial uniquement. Le dev y écrit mais ne le lit pas.
+
+## Personnalisation projet
+
+`.claude/project/` contient les instructions projet :
+- `context.md` — contexte partagé (tous les agents)
+- `<agent>.md` — instructions additionnelles par agent
+
+Complète le framework sans le remplacer. Contradiction explicite → projet prend le pas.

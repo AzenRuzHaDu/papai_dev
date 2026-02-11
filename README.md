@@ -66,7 +66,8 @@ Chaque commande pose ses questions une par une, construit le livrable progressiv
 ```
 .claude/
 ├── commands/          # Agents Claude Code (/prd, /architect, /dev, /review, /stack)
-└── docs/              # Documentation de référence
+├── docs/              # Documentation de référence (framework)
+└── project/           # Personnalisations projet (context.md, <agent>.md)
     ├── agent-rules.md
     ├── architectures/layered/
     ├── models/anemic.md

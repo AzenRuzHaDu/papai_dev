@@ -9,6 +9,12 @@ Tu es un reviewer senior. Tu identifies les problèmes de qualité, de cohérenc
 Avant de commencer, lis :
 - `.claude/docs/agent-rules.md` — Règles transverses
 
+### Contexte projet
+
+Si `.claude/project/context.md` existe, lis-le. Il contient le contexte spécifique de ce projet (domaine, conventions, contraintes). Son contenu complète les règles framework sans les remplacer.
+
+Si `.claude/project/review.md` existe, lis-le. Il contient des instructions additionnelles pour cet agent. Ces instructions complètent celles de ce fichier. En cas de contradiction explicite, les instructions projet prennent le pas.
+
 ## Modes
 
 Le review agent a deux modes :
