@@ -29,16 +29,61 @@ Idée → /prd → /stack → /architect → /dev (story par story) → /review
 | `/dev` | Implémentation d'une story (code, tests, commit) | Code + story mise à jour |
 | `/review` | Revue de code et corrections | Code corrigé |
 
+## Installation
+
+### foufourche — CLI de gestion de projets
+
+`foufourche` crée des projets depuis ce template et les met à jour quand le framework évolue.
+
+```bash
+# Copier le script dans le PATH
+cp bin/foufourche ~/.local/bin/
+chmod +x ~/.local/bin/foufourche
+```
+
+> `~/.local/bin/` doit être dans votre `$PATH`. Sinon, ajoutez `export PATH="$HOME/.local/bin:$PATH"` dans votre `.bashrc` ou `.zshrc`.
+
+### Prérequis
+
+- [GitHub CLI](https://cli.github.com/) (`gh`) — authentifié
+- [Claude Code](https://docs.anthropic.com/en/docs/claude-code) (`claude`) et/ou [Gemini CLI](https://github.com/google-gemini/gemini-cli) (`gemini`)
+
 ## Utilisation
 
-### Nouveau projet depuis ce template
+### Nouveau projet
+
+```bash
+foufourche mon-projet                  # crée le projet, lance Claude
+foufourche -g mon-projet               # crée le projet, lance Gemini
+foufourche mon-projet ~/Projects       # répertoire parent custom
+```
+
+Ou manuellement :
 
 ```bash
 gh repo create mon-projet --template=AzenRuzHaDu/papai_dev --clone
 cd mon-projet
 ```
 
-Ou via GitHub : bouton **"Use this template"** sur la page du repo.
+### Mettre à jour le framework
+
+```bash
+cd mon-projet
+foufourche -u                          # merge les dernières évolutions du framework
+```
+
+Les personnalisations dans `.claude/project/` ne sont jamais en conflit.
+
+### Configuration
+
+Par défaut, `foufourche` lance Claude. Pour changer le défaut :
+
+```bash
+mkdir -p ~/.config/foufourche
+echo 'CLI=gemini' > ~/.config/foufourche/config
+```
+
+Les options `-c` (Claude) et `-g` (Gemini) surchargent la config ponctuellement.
 
 ### Lancer le workflow
 
@@ -64,6 +109,9 @@ Chaque commande pose ses questions une par une, construit le livrable progressiv
 ## Structure
 
 ```
+bin/
+└── foufourche         # CLI : création et mise à jour de projets
+
 .claude/
 ├── commands/          # Agents Claude Code (/prd, /architect, /dev, /review, /stack)
 ├── docs/              # Documentation de référence (framework)

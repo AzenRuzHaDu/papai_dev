@@ -1,0 +1,141 @@
+#!/bin/bash
+set -e
+
+TEMPLATE_REPO="AzenRuzHaDu/papai_dev"
+REMOTE_NAME="framework"
+CONFIG_FILE="$HOME/.config/foufourche/config"
+
+# --- Config : défauts puis override fichier ---
+
+CLI="claude"
+
+if [ -f "$CONFIG_FILE" ]; then
+  # shellcheck source=/dev/null
+  source "$CONFIG_FILE"
+fi
+
+usage() {
+  cat <<EOF
+foufourche — Gestion de projets basés sur le template PAI DEV
+
+USAGE
+  foufourche [options] <nom-projet> [répertoire-parent]   Créer un nouveau projet
+  foufourche -u [répertoire-projet]                       Mettre à jour depuis le framework
+  foufourche -h                                           Afficher cette aide
+
+OPTIONS
+  -c    Utiliser Claude Code (défaut si non configuré autrement)
+  -g    Utiliser Gemini CLI
+  Sans -c/-g, utilise la valeur de CLI dans la config.
+
+CRÉER UN PROJET
+  foufourche mon-app
+  foufourche -g mon-app              # lance Gemini CLI après création
+  foufourche -c mon-app ~/Projects   # lance Claude, répertoire parent custom
+
+  Clone le template AzenRuzHaDu/papai_dev dans un nouveau repo privé.
+  Le répertoire parent par défaut est ~/Storage.
+
+METTRE À JOUR UN PROJET
+  foufourche -u
+  foufourche -u ~/Storage/mon-app
+
+  Fusionne les dernières évolutions du framework dans le projet.
+  Ajoute le remote "framework" s'il n'existe pas, fetch, puis merge.
+  Sans argument, utilise le répertoire courant.
+
+CONFIG
+  $CONFIG_FILE
+
+  Valeurs possibles :
+    CLI=claude    # ou gemini
+
+  Créer la config :
+    mkdir -p ~/.config/foufourche
+    echo 'CLI=gemini' > ~/.config/foufourche/config
+
+  CLI actuel : $CLI
+EOF
+}
+
+cmd_create() {
+  local project="$1"
+  local parent="${2:-$HOME/Storage}"
+
+  if [ -z "$project" ]; then
+    echo "Erreur: nom du projet requis"
+    echo "Usage: foufourche [-c|-g] <nom-projet> [répertoire-parent]"
+    exit 1
+  fi
+
+  cd "$parent"
+  gh repo create "$project" --template="$TEMPLATE_REPO" --clone --private
+  cd "$project"
+
+  # Ajouter le remote framework dès la création
+  git remote add "$REMOTE_NAME" "https://github.com/$TEMPLATE_REPO.git"
+  echo "Remote '$REMOTE_NAME' ajouté pour les futures mises à jour."
+
+  echo "Projet $project prêt dans $parent/$project"
+  echo "Lancement de $CLI..."
+  exec "$CLI"
+}
+
+cmd_update() {
+  local project_dir="${1:-.}"
+
+  cd "$project_dir"
+
+  # Vérifier qu'on est dans un repo git
+  if ! git rev-parse --git-dir > /dev/null 2>&1; then
+    echo "Erreur: $(pwd) n'est pas un dépôt git"
+    exit 1
+  fi
+
+  # Vérifier qu'il n'y a pas de changements non commités
+  if ! git diff --quiet || ! git diff --cached --quiet; then
+    echo "Erreur: des changements non commités existent. Commite ou stash avant de mettre à jour."
+    exit 1
+  fi
+
+  # Ajouter le remote framework s'il n'existe pas
+  if ! git remote get-url "$REMOTE_NAME" > /dev/null 2>&1; then
+    echo "Ajout du remote '$REMOTE_NAME'..."
+    git remote add "$REMOTE_NAME" "https://github.com/$TEMPLATE_REPO.git"
+  fi
+
+  # Fetch les dernières modifications
+  echo "Fetch depuis $REMOTE_NAME..."
+  git fetch "$REMOTE_NAME"
+
+  # Merge
+  echo "Merge de $REMOTE_NAME/main..."
+  if git merge "$REMOTE_NAME/main" --no-edit -m "chore: update framework from papai_dev [foufourche]"; then
+    echo "Mise à jour terminée."
+  else
+    echo ""
+    echo "Des conflits ont été détectés. Résous-les puis :"
+    echo "  git add . && git commit"
+    exit 1
+  fi
+}
+
+# --- Argument parsing ---
+
+while getopts ":cghu" opt; do
+  case "$opt" in
+    c) CLI="claude" ;;
+    g) CLI="gemini" ;;
+    h) usage; exit 0 ;;
+    u) shift $((OPTIND - 1)); cmd_update "$@"; exit 0 ;;
+    *) echo "Option inconnue: -$OPTARG"; usage; exit 1 ;;
+  esac
+done
+shift $((OPTIND - 1))
+
+if [ -z "${1:-}" ]; then
+  usage
+  exit 1
+fi
+
+cmd_create "$@"
