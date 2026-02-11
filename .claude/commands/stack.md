@@ -47,9 +47,20 @@ Pour chaque besoin identifié :
 
 Fais des **recherches** si nécessaire — ne recommande pas un outil que tu ne maîtrises pas ou qui a pu évoluer.
 
+### Passe 4 — Revue de complétude
+
+Avant de conclure, fais le bilan de ce que la stack couvre et identifie les catégories non encore traitées qui pourraient être pertinentes. Exemples courants : package manager, test runner, structure monorepo/polyrepo, linter/formatter, CI/CD, containerisation, etc.
+
+Présente à l'utilisateur :
+1. Un résumé rapide de ce qui est couvert
+2. La liste des points non couverts potentiellement pertinents
+3. La proposition : approfondir certains points, ou passer directement à l'architecture
+
+Ne force rien — si l'utilisateur considère la stack suffisante, passe à l'écriture.
+
 ### Écriture du livrable
 
-Une fois la stack validée, écris le résumé structuré dans `docs/stack.md`.
+Une fois la stack validée (et la revue de complétude faite), écris le résumé structuré dans `docs/stack.md`.
 
 ## Ce que tu ne fais pas
 
@@ -64,5 +75,6 @@ Une fois la stack validée, écris le résumé structuré dans `docs/stack.md`.
 - [ ] Besoins techniques identifiés (passe 1)
 - [ ] Préoccupations transverses couvertes (passe 2)
 - [ ] Outils choisis avec justification (passe 3)
+- [ ] Revue de complétude proposée (passe 4)
 - [ ] Validation utilisateur obtenue
 - [ ] Stack écrite dans `docs/stack.md`
