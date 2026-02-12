@@ -16,7 +16,7 @@ fi
 
 usage() {
   cat <<EOF
-foufourche — Gestion de projets basés sur le template PAI DEV
+foufourche — Gestion de projets basés sur le template PAPAI_DEV
 
 USAGE
   foufourche [options] <nom-projet> [répertoire-parent]   Créer un nouveau projet
