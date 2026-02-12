@@ -108,15 +108,73 @@ cmd_update() {
   echo "Fetch depuis $REMOTE_NAME..."
   git fetch "$REMOTE_NAME"
 
-  # Merge
+  # Merge — avec allow-unrelated-histories pour le premier merge (template GitHub)
   echo "Merge de $REMOTE_NAME/main..."
-  if git merge "$REMOTE_NAME/main" --no-edit -m "chore: update framework from papai_dev [foufourche]"; then
+  if git merge "$REMOTE_NAME/main" --allow-unrelated-histories --no-edit -m "chore: update framework from papai_dev [foufourche]"; then
     echo "Mise à jour terminée."
   else
+    # Auto-résolution : les fichiers framework prennent toujours la version framework
     echo ""
-    echo "Des conflits ont été détectés. Résous-les puis :"
-    echo "  git add . && git commit"
-    exit 1
+    echo "Conflits détectés, résolution automatique des fichiers framework..."
+
+    local conflicts
+    conflicts=$(git diff --name-only --diff-filter=U)
+
+    if [ -z "$conflicts" ]; then
+      echo "Aucun conflit à résoudre."
+      git commit --no-edit
+    else
+      # Fichiers framework : toujours --theirs (le framework gagne)
+      local framework_patterns=(
+        ".claude/commands/"
+        ".claude/docs/"
+        ".gemini/commands/"
+        ".gemini/docs/"
+        "CLAUDE.md"
+        "GEMINI.md"
+        "README.md"
+        "bin/"
+      )
+
+      local auto_resolved=0
+      local manual_conflicts=()
+
+      while IFS= read -r file; do
+        local is_framework=false
+        for pattern in "${framework_patterns[@]}"; do
+          if [[ "$file" == "$pattern"* || "$file" == "$pattern" ]]; then
+            is_framework=true
+            break
+          fi
+        done
+
+        if $is_framework; then
+          git checkout --theirs "$file"
+          git add "$file"
+          echo "  ✓ $file (framework → theirs)"
+          auto_resolved=$((auto_resolved + 1))
+        else
+          manual_conflicts+=("$file")
+        fi
+      done <<< "$conflicts"
+
+      echo "$auto_resolved fichier(s) framework résolus automatiquement."
+
+      if [ ${#manual_conflicts[@]} -gt 0 ]; then
+        echo ""
+        echo "Conflits restants (fichiers projet) :"
+        for f in "${manual_conflicts[@]}"; do
+          echo "  ✗ $f"
+        done
+        echo ""
+        echo "Résous ces conflits manuellement puis :"
+        echo "  git add . && git commit"
+        exit 1
+      else
+        git commit --no-edit -m "chore: update framework from papai_dev [foufourche]"
+        echo "Mise à jour terminée."
+      fi
+    fi
   fi
 }
 
