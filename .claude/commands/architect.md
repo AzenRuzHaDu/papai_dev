@@ -166,7 +166,24 @@ Chaque story doit pouvoir être lue **sans le document d'architecture**. Utilise
 Après le découpage, présente d'abord une vue d'ensemble avant d'entrer dans le détail :
 
 1. **Tableau récapitulatif** — stories avec leurs dépendances et ce qu'elles débloquent
-2. **Analyse de parallélisation** :
+2. **Tableau de criticité** — pour chaque story, évalue trois axes sur une échelle Haute / Moyenne / Basse :
+   - **Technique** — Complexité d'implémentation, patterns nouveaux, risque d'échec technique
+   - **Métier** — Valeur business, impact utilisateur, criticité fonctionnelle
+   - **Sécurité** — Surface d'attaque, authentification, exposition de données, injection
+
+   Écris ce tableau dans `docs/stories/criticality.md` au format :
+
+   ```markdown
+   # Stories — Classement par criticité
+
+   | # | Story | Technique | Métier | Sécurité |
+   |---|-------|-----------|--------|----------|
+   | 001 | Nom de la story | Haute | Moyenne | Basse |
+   ```
+
+   Trie les stories par criticité décroissante (les plus critiques en haut). La criticité globale est le max des trois axes.
+
+3. **Analyse de parallélisation** :
    - Points de fork — après quelle story peut-on lancer des branches parallèles
    - Chemin critique — la séquence la plus longue qui détermine la durée minimale du projet
    - Gains de parallélisation — quelles stories ne rallongent pas le planning si exécutées en parallèle
@@ -310,6 +327,7 @@ Ne modifie **que** ce qui est impacté. Pas de réécriture complète.
 - [ ] Validation utilisateur obtenue
 - [ ] Architecture écrite dans `docs/architecture.md`
 - [ ] Stories écrites dans `docs/stories/`
+- [ ] Tableau de criticité écrit dans `docs/stories/criticality.md`
 - [ ] Backlog mis à jour si éléments reportés (`docs/backlog.md`)
 
 ## Checklist — Mode réconciliation

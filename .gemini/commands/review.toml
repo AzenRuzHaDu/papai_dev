@@ -106,6 +106,7 @@ Lis :
 - `docs/architecture.md` — Décisions d'architecture
 - `docs/stack.md` (si existant) — Cohérence technique
 - `docs/stories/*.md` — Toutes les stories à valider
+- `docs/stories/criticality.md` — Tableau de criticité (si existant)
 
 ### Input
 
@@ -141,29 +142,39 @@ Valide le graphe :
 - Le champ "Débloque" est cohérent avec les "Dépendances" des stories suivantes
 - Le chemin critique identifié par l'architecte est correct
 
-#### Phase 4 — Complétude et testabilité
+#### Phase 4 — Criticité et proportionnalité
+
+Si `docs/stories/criticality.md` existe, valide le tableau :
+- Les niveaux attribués sont cohérents (une story qui touche à l'auth ne peut pas être "Sécurité: Basse")
+- Les stories à criticité Haute sur un axe ont des cas d'erreur et des tests proportionnels à ce niveau
+- Signale les stories où la criticité semble sous-évaluée ou sur-évaluée
+
+Si le tableau n'existe pas, signale-le comme bloquant.
+
+#### Phase 5 — Complétude et testabilité
 
 Pour chaque story, vérifie :
 - Tous les champs du template sont remplis (objectif, contexte, fichiers, cas d'erreur, tests, critères de validation, dépendances, débloque)
-- Les cas d'erreur ne sont pas vides ou génériques
-- Les critères de validation sont concrets et vérifiables (pas de "ça marche bien")
+- Les cas d'erreur ne sont pas vides ou génériques — challenge activement : "Et si l'input est vide ? Et si la connexion échoue ? Et si l'utilisateur n'a pas les droits ?"
+- Les critères de validation sont concrets et vérifiables (pas de "ça marche bien", pas de "l'UI est responsive")
 - Les tests attendus sont cohérents avec la testing strategy
+- **Proportionnalité criticité/tests** — Les stories à haute criticité technique doivent avoir des tests d'intégration, pas seulement des unitaires. Les stories à haute criticité sécurité doivent tester les cas d'accès non autorisé.
 
-#### Phase 5 — Rapport
+#### Phase 6 — Rapport
 
 Présente le rapport organisé par sévérité :
 
-- **Bloquant** — Doit être corrigé avant de commencer le dev. Exemples : feature MVP non couverte, dépendance circulaire, incohérence sur une entité.
-- **Amélioration** — Recommandé mais non bloquant. Exemples : critère de validation imprécis, cas d'erreur qui pourrait être ajouté.
+- **Bloquant** — Doit être corrigé avant de commencer le dev. Exemples : feature MVP non couverte, dépendance circulaire, incohérence sur une entité, tableau de criticité manquant, story haute criticité sans tests proportionnels.
+- **Amélioration** — Recommandé mais non bloquant. Exemples : critère de validation imprécis, cas d'erreur qui pourrait être ajouté, criticité potentiellement sous-évaluée.
 
 Pour chaque issue :
-- Quelle story est concernée
+- Quelle story est concernée (et son niveau de criticité)
 - Quel est le problème
 - Suggestion de correction
 
 Conclusion :
 - Si bloquants → recommande de relancer `/architect` pour corriger les stories impactées
-- Si aucun bloquant → feu vert pour `/dev`
+- Si aucun bloquant → feu vert pour `/doc-feed` puis `/dev`
 
 ### Ce que tu ne fais pas (mode stories)
 
@@ -177,10 +188,12 @@ Conclusion :
 - [ ] PRD lu
 - [ ] Architecture lue
 - [ ] Toutes les stories lues
+- [ ] Tableau de criticité lu et validé
 - [ ] Couverture PRD vérifiée
 - [ ] Cohérence inter-stories vérifiée
 - [ ] Graphe de dépendances validé
-- [ ] Complétude et testabilité évaluées
+- [ ] Criticité et proportionnalité évaluées
+- [ ] Complétude et testabilité évaluées (challenge actif des cas d'erreur)
 - [ ] Rapport présenté avec sévérités
 - [ ] Recommandation claire (feu vert ou corrections nécessaires)
 """
