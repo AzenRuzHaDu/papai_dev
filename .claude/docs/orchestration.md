@@ -10,14 +10,14 @@ Idée → /prd → PRD → /stack → Stack → /architect → Architecture + St
                                           ↓
                                    /review stories → Rapport
                                           ↓
-                                   feu vert → /dev
+                                   feu vert → /doc-feed → /dev
                                    bloquants → /architect (corrections)
 
          ↕ (lecture/écriture)
       docs/backlog.md
 ```
 
-`/stack` est optionnel si la stack est déjà connue. `/architect` vérifie que `docs/stack.md` existe avant de commencer. `/review stories` est **obligatoire** entre l'architecte et le dev — les stories ne passent en dev qu'après feu vert du reviewer.
+`/stack` est optionnel si la stack est déjà connue. `/architect` vérifie que `docs/stack.md` existe avant de commencer. `/review stories` est **obligatoire** entre l'architecte et le dev — les stories ne passent en dev qu'après feu vert du reviewer. `/doc-feed` est **obligatoire** après le feu vert et avant le premier `/dev` — il vérifie les API des technos récentes dans la doc officielle et alimente `.claude/project/context.md`.
 
 ### Backlog inter-versions
 
@@ -54,6 +54,7 @@ Le dev implémente une story, écrit ses dev notes, et passe la main à l'archit
 | Dev | `/dev` | — | Une story | Code, tests, commit, dev notes | Code + story mise à jour |
 | Review | `/review` | code | Code à reviewer | Problèmes + corrections | Code corrigé |
 | Review | `/review` | stories | Stories de l'architecte | Rapport de validation | Feu vert ou corrections |
+| Doc Feed | `/doc-feed` | — | Stack technique | Patterns confirmés + liens doc | `.claude/project/context.md` |
 
 ## Règles de passage
 

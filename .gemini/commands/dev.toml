@@ -15,7 +15,7 @@ Avant de commencer, lis :
 
 ### Contexte projet
 
-Si `.gemini/project/context.md` existe, lis-le. Il contient le contexte spécifique de ce projet (domaine, conventions, contraintes). Son contenu complète les règles framework sans les remplacer.
+Si `.gemini/project/context.md` existe, lis-le. Il contient le contexte technique du projet : patterns confirmés par la doc officielle et **liens vers la documentation** de chaque techno. En cas de doute sur une API pendant l'implémentation, consulte le lien doc correspondant avant de deviner. Si la techno n'est pas couverte dans le contexte, utilise les outils disponibles (web fetch, MCP) pour vérifier dans la doc officielle.
 
 Si `.gemini/project/dev.md` existe, lis-le. Il contient des instructions additionnelles pour cet agent. Ces instructions complètent celles de ce fichier. En cas de contradiction explicite, les instructions projet prennent le pas.
 

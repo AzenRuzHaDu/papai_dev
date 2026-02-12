@@ -15,7 +15,7 @@ Idée → /prd → PRD → /stack (si nécessaire) → /architect → Architectu
                                               └──────── story N+1 ←──────────┘
 ```
 
-Chaque étape produit un livrable écrit dans `docs/` et directement consommable par la suivante. L'utilisateur valide avant chaque passage. Le `/review stories` est **obligatoire** avant de passer au dev — pas de dev sans feu vert. Entre deux stories, le dev rapporte ses imprévus à l'architecte qui réconcilie si nécessaire.
+Chaque étape produit un livrable écrit dans `docs/` et directement consommable par la suivante. L'utilisateur valide avant chaque passage. Le `/review stories` est **obligatoire** avant de passer au dev — pas de dev sans feu vert. Après le feu vert, `/doc-feed` vérifie les API des technos récentes dans la doc officielle et alimente le contexte technique du projet. Entre deux stories, le dev rapporte ses imprévus à l'architecte qui réconcilie si nécessaire.
 
 ## Commandes disponibles
 
@@ -29,6 +29,7 @@ Chaque étape produit un livrable écrit dans `docs/` et directement consommable
 | `/dev` | Développeur senior | Une story | Code, tests, commit, dev notes | Code + story mise à jour |
 | `/review` | Reviewer (code) | Code à reviewer | Problèmes + corrections | Code corrigé |
 | `/review` | Reviewer (stories) | Stories de l'architecte | Rapport de validation | Feu vert ou corrections |
+| `/doc-feed` | Chercheur technique | Stack technique | Patterns confirmés + liens doc | `.gemini/project/context.md` |
 
 ### Backlog inter-versions
 
@@ -63,6 +64,7 @@ Tous dans `.gemini/docs/` :
 | `stack-selection.md` | Procédure de sélection de stack |
 | `testing-strategy.md` | Stratégie de tests par couche |
 | `orchestration.md` | Chaîne, passages, escalade |
+| `doc-feeding.md` | Vérification documentaire des technos |
 | `backlog-format.md` | Format du backlog inter-versions |
 
 ## Contexte projet

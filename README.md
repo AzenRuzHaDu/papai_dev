@@ -7,7 +7,7 @@ Transforme une idée en code implémenté via une chaîne d'agents spécialisés
 ## Workflow
 
 ```
-Idée → /prd → /stack → /architect → /review stories → /dev (story par story) → /review code
+Idée → /prd → /stack → /architect → /review stories → /doc-feed → /dev (story par story) → /review code
 ```
 
 ```
@@ -27,6 +27,7 @@ Idée → /prd → /stack → /architect → /review stories → /dev (story par
 | `/stack` | Sélection de stack technique | `docs/stack.md` |
 | `/architect` | Architecture + découpage en stories | `docs/architecture.md` + `docs/stories/*.md` |
 | `/dev` | Implémentation d'une story (code, tests, commit) | Code + story mise à jour |
+| `/doc-feed` | Vérification doc des technos récentes | `.claude/project/context.md` |
 | `/review` | Revue de code et corrections | Code corrigé |
 
 ## Installation
@@ -97,10 +98,16 @@ Les options `-c` (Claude) et `-g` (Gemini) surchargent la config ponctuellement.
 # 3. Générer l'architecture et les stories
 /architect
 
-# 4. Implémenter story par story
+# 4. Valider les stories avant dev
+/review stories
+
+# 5. Vérifier les docs des technos récentes
+/doc-feed
+
+# 6. Implémenter story par story
 /dev
 
-# 5. Reviewer le code
+# 7. Reviewer le code
 /review
 ```
 
