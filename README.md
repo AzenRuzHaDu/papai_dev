@@ -117,23 +117,27 @@ Chaque commande pose ses questions une par une, construit le livrable progressiv
 
 ```
 bin/
-└── foufourche         # CLI : création et mise à jour de projets
+├── foufourche         # CLI : création et mise à jour de projets
+└── sync-agents.py     # Sync bidirectionnel Claude ↔ Gemini
 
 .claude/
-├── commands/          # Agents Claude Code (/prd, /architect, /dev, /review, /stack)
+├── commands/          # Agents (/prd, /architect, /dev, /doc-feed, /review, /stack)
 ├── docs/              # Documentation de référence (framework)
+│   ├── agent-rules.md
+│   ├── architectures/layered/
+│   ├── models/anemic.md
+│   ├── doc-feeding.md
+│   ├── git-workflow.md
+│   ├── orchestration.md
+│   ├── stack-selection.md
+│   ├── testing-strategy.md
+│   └── backlog-format.md
 └── project/           # Personnalisations projet (context.md, <agent>.md)
-    ├── agent-rules.md
-    ├── architectures/layered/
-    ├── models/anemic.md
-    ├── git-workflow.md
-    ├── orchestration.md
-    ├── stack-selection.md
-    └── testing-strategy.md
 
 .gemini/
-├── commands/          # Agents Gemini CLI (mêmes commandes)
-└── docs/              # Même documentation de référence
+├── commands/          # Agents Gemini CLI (mêmes commandes, format TOML)
+├── docs/              # Même documentation de référence
+└── project/           # Personnalisations projet
 
 docs/                  # Livrables projet (générés par les agents)
 ```

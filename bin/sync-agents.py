@@ -50,6 +50,7 @@ TAG_REPLACEMENTS_C2G = [
     ("[claude/prd]", "[gemini/prd]"),
     ("[claude/review]", "[gemini/review]"),
     ("[claude/stack]", "[gemini/stack]"),
+    ("[claude/doc-feed]", "[gemini/doc-feed]"),
 ]
 
 
